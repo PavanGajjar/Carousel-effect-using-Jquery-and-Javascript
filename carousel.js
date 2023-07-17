@@ -43,17 +43,16 @@ $(document).ready( () => {
 		slider.animate( {left: newLeftProperty}, 1000);				
 	});  // end click
 	
-	$("#image_list a").click((event) => {
-
+	$("#image_list a img").click((event) => {
 		event.preventDefault();
 
-		const imgSrc = event.target.src;
+		let clickedImgSrc = event.target.src.replace(event.target.baseURI, ""); // remove base url from the string and get only image path
+		if (clickedImgSrc != $("#image").attr("src")) {
 
-		if (imgSrc && imgSrc != null && imgSrc != $("#image").attr("src")) {
-			$("#image").animate({ opacity: 0, marginLeft: "-=205" }, 1000, () => {
-				$("#image").attr("src", imgSrc); // set src to main image
-				$("#image").css("margin-left", "+=410px"); // set margin manually for animation
-				$("#image").animate({ opacity: 1, marginLeft: "-=205" }, 1000); // set animation
+			$("#image").animate({ opacity: 0, marginLeft: `-=${FADE_DISTANCE}` }, 1000, () => {
+				$("#image").attr("src", clickedImgSrc); // set src to main image
+				$("#image").css("margin-left", `+=${FADE_DISTANCE*2}`); // set margin manually for animation
+				$("#image").animate({ opacity: 1, marginLeft: `-=${FADE_DISTANCE}` }, 1000); // set animation
 			});
 		}
 	});
